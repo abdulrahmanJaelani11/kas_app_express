@@ -5,7 +5,7 @@
       style="height: 9%; background-color: aliceblue"
     >
       <router-link
-        class="d-flex text-center flex-column icon-nav active"
+        class="d-flex text-center flex-column icon-nav"
         :to="{ name: 'home' }"
         ><i class="ti ti-home" style="font-size: 25px"></i
         ><small>Home</small></router-link
