@@ -62,7 +62,7 @@
                         class="p-2 d-flex text-center flex-column text-light"
                         :to="{ name: 'Kas_form' }"
                         ><i class="ti ti-wallet" style="font-size: 25px"></i
-                        ><small>Transaksi</small></router-link
+                        ><small>Add Transaksi</small></router-link
                       >
                       <router-link
                         class="p-2 d-flex text-center flex-column text-light"
@@ -182,7 +182,7 @@ export default {
     async getSaldo() {
       try {
         const response = await axios.get(this.$api + `get-saldo`);
-        this.saldo = response.data.saldo.toLocaleString("id-ID", {
+        this.saldo = response.data.toLocaleString("id-ID", {
           style: "currency",
           currency: "IDR",
         });
@@ -237,7 +237,7 @@ export default {
     async getPengeluaran() {
       try {
         const response = await axios.get(this.$api + `get-pengeluaran`);
-        if (response.data.pemasukan != null) {
+        if (response.data.pengeluaran != null) {
           this.pengeluaran = response.data.pengeluaran.toLocaleString("id-ID", {
             style: "currency",
             currency: "IDR",
