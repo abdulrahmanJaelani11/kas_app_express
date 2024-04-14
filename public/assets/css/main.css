@@ -1,0 +1,38 @@
+small {
+    font-size: 11px;
+  }
+  
+  .main-card{
+        background-image: linear-gradient(to right, #5D87FF, #94caff);      
+  }
+  
+.card{
+    margin-bottom: 10px;
+}
+
+.container-fluid{
+  padding-top: 0;
+}
+
+.icon-nav.active{
+  /* background-color: lightskyblue; */
+  padding: 4px;
+  border-radius: 10px;
+  border: 1px solid blue;
+}
+
+.border-success{
+  border: 1px solid green;
+}
+
+.border-danger{
+  border: 1px solid red;
+}
+
+.border-dark{
+  border: 1px solid black;
+}
+
+.rounded-50{
+  border-radius: 40%;
+}
