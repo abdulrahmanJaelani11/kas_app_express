@@ -21,16 +21,39 @@
         <!-- <h5 style="font-weight: bold">Daftar Anggota</h5> -->
         <div class="row">
           <div class="col-12" style="margin-bottom: 60px">
-            <h5 class="card-title">Riwayat transaksi</h5>
+            <div class="row">
+              <div class="col-6">
+                <h5 class="card-title">Riwayat transaksi</h5>
+              </div>
+              <div class="col-6 d-flex justify-content-end">
+                <button @click="downloadPDF" class="btn btn-primary btn-sm">
+                  Unduh PDF
+                </button>
+              </div>
+            </div>
             <hr />
             <table class="table">
               <tbody>
                 <tr v-for="tran in dt_riwayat" :key="tran.id">
-                  <td style="width: 30px">
-                    <i class="ti ti-user" style="font-size: 20px"></i>
+                  <td
+                    style="padding-right: 0; padding-left: 0"
+                    class="d-flex align-items-center"
+                  >
+                    <img
+                      src="../../public/assets/images/profile/user-1.jpg"
+                      alt="logo"
+                      style="
+                        width: 40px;
+                        margin: 0;
+                        padding: 0;
+                        border-radius: 50%;
+                      "
+                    />
                   </td>
                   <td>
-                    <span class="fw-semibold">{{ tran.nama_anggota }}</span>
+                    <span class="fw-semibold fs-2">{{
+                      tran.nama_anggota
+                    }}</span>
                     <small class="d-block">{{ tran.created_date }}</small>
                   </td>
                   <td class="fw-semibold">
@@ -40,9 +63,9 @@
                     ></i>
                     <i
                       v-if="tran.tipe_transaksi == 'pengeluaran'"
-                      class="ti ti-arrow-down-left text-danger"
+                      class="ti ti-arrow-down-right text-danger"
                     ></i
-                    >{{ tran.nominal }}
+                    ><span class="fs-2"> {{ tran.nominal }}</span>
                   </td>
                 </tr>
               </tbody>
@@ -76,9 +99,42 @@ export default {
   },
   methods: {
     async getData() {
+      let results = [];
       const respon = await axios.get(this.$api + `get-riwayat`);
-      console.log(respon.data);
-      this.dt_riwayat = respon.data;
+      let data = respon.data;
+      for (let i = 0; i < data.length; i++) {
+        results.push({
+          id: data[i].id,
+          nama_anggota: data[i].nama_anggota,
+          tipe_transaksi: data[i].tipe_transaksi,
+          created_date: data[i].created_date,
+          nominal: parseInt(data[i].nominal).toLocaleString("id-ID", {
+            style: "currency",
+            currency: "IDR",
+          }),
+        });
+      }
+      this.dt_riwayat = results;
+    },
+    downloadPDF() {
+      // Mengirim permintaan ke server untuk mendapatkan file PDF
+      fetch(this.$api + `generate-pdf`)
+        .then((response) => response.blob())
+        .then((blob) => {
+          // Membuat URL objek untuk file blob
+          const url = window.URL.createObjectURL(new Blob([blob]));
+
+          // Membuat tautan untuk file PDF dan mengkliknya secara otomatis
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "Data_transaksi.pdf");
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        })
+        .catch((error) => {
+          console.error("Terjadi kesalahan:", error);
+        });
     },
   },
 };

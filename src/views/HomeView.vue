@@ -62,7 +62,7 @@
                         class="p-2 d-flex text-center flex-column text-light"
                         :to="{ name: 'Kas_form' }"
                         ><i class="ti ti-wallet" style="font-size: 25px"></i
-                        ><small>Add Transaksi</small></router-link
+                        ><small>Transaksi</small></router-link
                       >
                       <router-link
                         class="p-2 d-flex text-center flex-column text-light"
@@ -96,7 +96,7 @@
                 <!-- Yearly Breakup -->
                 <div class="card">
                   <div class="p-2 text-center">
-                    <small class="fw-semibold">Pemasukan</small><br />
+                    <span class="fw-semibold fs-2">Pemasukan</span><br />
                     <i class="ti ti-arrow-up-left text-success"></i>
                     <span>{{ pemasukan }}</span>
                   </div>
@@ -106,7 +106,7 @@
                 <!-- Yearly Breakup -->
                 <div class="card">
                   <div class="p-2 text-center">
-                    <small class="fw-semibold">Pengeluaran</small><br />
+                    <span class="fw-semibold fs-2">Pengeluaran</span><br />
                     <i class="ti ti-arrow-down-right text-danger"></i>
                     <span>{{ pengeluaran }}</span>
                   </div>
@@ -117,11 +117,25 @@
                 <table class="table">
                   <tbody>
                     <tr v-for="tran in dt_transaksi_hari_ini" :key="tran.id">
-                      <td style="width: 30px">
-                        <i class="ti ti-user" style="font-size: 20px"></i>
+                      <td
+                        style="padding-right: 0; padding-left: 0"
+                        class="d-flex align-items-center"
+                      >
+                        <img
+                          src="../../public/assets/images/profile/user-1.jpg"
+                          alt="logo"
+                          style="
+                            width: 40px;
+                            margin: 0;
+                            padding: 0;
+                            border-radius: 50%;
+                          "
+                        />
                       </td>
                       <td>
-                        <span class="fw-semibold">{{ tran.nama_anggota }}</span>
+                        <span class="fw-semibold fs-2">{{
+                          tran.nama_anggota
+                        }}</span>
                         <small class="d-block">{{ tran.created_date }}</small>
                       </td>
                       <td class="fw-semibold">
@@ -131,9 +145,9 @@
                         ></i>
                         <i
                           v-if="tran.tipe_transaksi == 'pengeluaran'"
-                          class="ti ti-arrow-down-left text-danger"
+                          class="ti ti-arrow-down-right text-danger"
                         ></i
-                        >{{ tran.nominal }}
+                        ><span class="fs-2"> {{ tran.nominal }}</span>
                       </td>
                     </tr>
                   </tbody>
@@ -202,7 +216,7 @@ export default {
             nama_anggota: data[i].nama_anggota,
             tipe_transaksi: data[i].tipe_transaksi,
             created_date: data[i].created_date,
-            nominal: data[i].nominal.toLocaleString("id-ID", {
+            nominal: parseInt(data[i].nominal).toLocaleString("id-ID", {
               style: "currency",
               currency: "IDR",
             }),
