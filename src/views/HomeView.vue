@@ -17,6 +17,26 @@
       <Header />
       <!--  Header End -->
       <div class="container pb-5">
+        <router-link
+          v-if="dt_user.role_id != 3"
+          :to="{ name: 'Kas_form' }"
+          class="btn btn-primary"
+          style="
+            z-index: 9999;
+            position: fixed;
+            bottom: 5%;
+            right: 50%;
+            transform: translateX(50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 5px solid white;
+          "
+          ><i class="ti ti-wallet fs-6"></i
+        ></router-link>
         <!--  Row 1 -->
         <div class="row pt-3">
           <div class="col-md-12">

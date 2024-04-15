@@ -20,6 +20,7 @@ import Riwayat from "../views/Riwayat.vue";
 import Setting from "../views/Setting.vue";
 import Profile from "../views/Profile.vue";
 import DetailPembayaran from "../views/DetailPembayaran.vue";
+import Keamanan from "../views/Keamanan.vue";
 
 const routes = [
   {
@@ -138,6 +139,14 @@ const routes = [
     path: "/detail-pembayaran:id",
     name: "DetailPembayaran",
     component: DetailPembayaran,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: "/keamanan:id",
+    name: "Keamanan",
+    component: Keamanan,
     meta: {
       auth: true,
     },

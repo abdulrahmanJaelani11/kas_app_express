@@ -118,11 +118,13 @@ export default {
     },
     downloadPDF() {
       // Mengirim permintaan ke server untuk mendapatkan file PDF
-      fetch(this.$api + `generate-pdf`)
-        .then((response) => response.blob())
-        .then((blob) => {
-          // Membuat URL objek untuk file blob
-          const url = window.URL.createObjectURL(new Blob([blob]));
+      axios
+        .get(this.$api + "generate-pdf", {
+          responseType: "blob", // Menentukan tipe respons sebagai blob
+        })
+        .then((response) => {
+          const blob = new Blob([response.data]);
+          const url = window.URL.createObjectURL(blob);
 
           // Membuat tautan untuk file PDF dan mengkliknya secara otomatis
           const link = document.createElement("a");

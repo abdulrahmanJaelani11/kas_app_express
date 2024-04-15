@@ -28,14 +28,14 @@
                     <tr>
                       <td colspan="2">
                         <div class="row">
-                          <div class="col-4">
+                          <div class="col-3">
                             <img
                               src="../../public/assets/images/profile/user-1.jpg"
                               alt="logo"
                               class="img-fluid rounded-circle"
                             />
                           </div>
-                          <div class="col-8 d-flex align-items-center">
+                          <div class="col-9 d-flex align-items-center">
                             <router-link :to="{ name: 'Profile' }"
                               ><span class="text-dark fs-4 fw-semibold">{{
                                 dt_user.result[0].full_name
@@ -66,7 +66,12 @@
                         <i class="ti ti-lock fs-6"></i>
                       </td>
                       <td>
-                        <router-link :to="{}" class="fw-semibold text-dark"
+                        <router-link
+                          :to="{
+                            name: 'Keamanan',
+                            params: { id: dt_user.result[0].id },
+                          }"
+                          class="fw-semibold text-dark"
                           >Akun & Keamanan</router-link
                         >
                       </td>

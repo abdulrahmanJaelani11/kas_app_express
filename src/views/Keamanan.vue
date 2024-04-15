@@ -120,7 +120,7 @@ import Sidebar from "@/components/Sidebar.vue";
 import Header from "@/components/Header.vue";
 import axios from "axios";
 export default {
-  name: "Anggota",
+  name: "Keamanan",
   components: {
     Sidebar,
     Header,
