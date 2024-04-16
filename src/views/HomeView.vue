@@ -86,7 +86,7 @@
                       >
                       <router-link
                         class="p-2 d-flex text-center flex-column text-light"
-                        :to="{ name: 'home' }"
+                        :to="{ name: 'DetailTransaksi' }"
                         ><i class="ti ti-chart-bar" style="font-size: 25px"></i
                         ><small>Detail</small></router-link
                       >

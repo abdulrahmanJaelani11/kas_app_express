@@ -17,7 +17,7 @@
       <Header />
       <!--  Header End -->
 
-      <div class="container pt-3">
+      <div class="container pt-3 pb-5">
         <div class="row">
           <div class="col-12">
             <div
@@ -40,7 +40,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12" v-for="trans in dt_detPembayaran" :key="trans.id">
+          <!-- <div class="col-12" v-for="trans in dt_detPembayaran" :key="trans.id">
             <div class="card border-success" v-if="trans.nominal != null">
               <div class="card-body">
                 <div class="row">
@@ -72,6 +72,41 @@
                 </div>
               </div>
             </div>
+          </div> -->
+          <div class="col-12">
+            <table class="table">
+              <tbody>
+                <tr v-for="trans in dt_detPembayaran" :key="trans.id">
+                  <td>
+                    <div class="row">
+                      <div class="col-10">
+                        <span class="fs-2" style="font-weight: bold">{{
+                          trans.bulan
+                        }}</span
+                        ><br />
+                        <span class="fs-2">{{ trans.nominal }}</span
+                        ><br />
+                        <span class="fs-2">{{ trans.created_date }}</span>
+                      </div>
+                      <div
+                        class="col-2 d-flex justify-content-end align-items-center"
+                      >
+                        <i
+                          v-if="trans.tahun != null"
+                          class="ti ti-check bg-success text-light fs-4 rounded-circle"
+                          style="padding: 5px"
+                        ></i>
+                        <i
+                          v-if="trans.tahun == null"
+                          class="ti ti-x bg-danger text-light fs-4 rounded-circle"
+                          style="padding: 5px"
+                        ></i>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

@@ -21,6 +21,7 @@ import Setting from "../views/Setting.vue";
 import Profile from "../views/Profile.vue";
 import DetailPembayaran from "../views/DetailPembayaran.vue";
 import Keamanan from "../views/Keamanan.vue";
+import DetailTransaksi from "../views/DetailTransaksi.vue";
 
 const routes = [
   {
@@ -147,6 +148,14 @@ const routes = [
     path: "/keamanan:id",
     name: "Keamanan",
     component: Keamanan,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: "/detail-transaksi",
+    name: "DetailTransaksi",
+    component: DetailTransaksi,
     meta: {
       auth: true,
     },

@@ -55,14 +55,14 @@
                     />
                   </div>
                   <div class="col-7">
-                    <span class="fw-semibold">{{ anggota.nama }}</span
+                    <span class="fw-semibold fs-2">{{ anggota.nama }}</span
                     ><br />
-                    <span>{{ anggota.status }}</span>
+                    <span class="fs-2">{{ anggota.status }}</span>
                   </div>
                   <div class="col-2">
                     <div class="dropdown">
                       <a
-                        class="btn btn-primary btn-sm dropdown-toggle"
+                        class="btn btn-primary fs-2 btn-sm dropdown-toggle"
                         href="#"
                         role="button"
                         data-bs-toggle="dropdown"
@@ -78,14 +78,14 @@
                               name: 'Anggota_edit',
                               params: { id: anggota.id },
                             }"
-                            class="dropdown-item"
+                            class="dropdown-item fs-2"
                             ><i class="ti ti-edit"></i>Edit</router-link
                           >
                         </li>
                         <li v-if="dt_user.role_id != 3">
                           <router-link
                             :to="{ name: 'Anggota_form' }"
-                            class="dropdown-item"
+                            class="dropdown-item fs-2"
                             ><i class="ti ti-trash"></i>Hapus</router-link
                           >
                         </li>
@@ -95,7 +95,7 @@
                               name: 'DetailPembayaran',
                               params: { id: anggota.id },
                             }"
-                            class="dropdown-item"
+                            class="dropdown-item fs-2"
                             ><i class="ti ti-wallet"></i>Lihat
                             Pembayaran</router-link
                           >
