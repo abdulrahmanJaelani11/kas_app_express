@@ -116,13 +116,13 @@ export default {
       }
       this.dt_riwayat = results;
     },
-    downloadPDF() {
+    async downloadPDF() {
       // Mengirim permintaan ke server untuk mendapatkan file PDF
-      axios
-        .get(this.$api + "generate-pdf", {
+      try {
+        const response = await axios.get(this.$api + "generate-pdf", {
           responseType: "blob", // Menentukan tipe respons sebagai blob
-        })
-        .then((response) => {
+        });
+        if (response) {
           const blob = new Blob([response.data]);
           const url = window.URL.createObjectURL(blob);
 
@@ -133,10 +133,10 @@ export default {
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
-        })
-        .catch((error) => {
-          console.error("Terjadi kesalahan:", error);
-        });
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
