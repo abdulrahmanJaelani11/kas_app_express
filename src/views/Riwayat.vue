@@ -122,6 +122,7 @@ export default {
         const response = await axios.get(this.$api + "generate-pdf", {
           responseType: "blob", // Menentukan tipe respons sebagai blob
         });
+        console.log(response.data);
         if (response) {
           const blob = new Blob([response.data]);
           const url = window.URL.createObjectURL(blob);
