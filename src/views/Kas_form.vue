@@ -18,98 +18,114 @@
       <!--  Header End -->
 
       <div class="container py-4">
-        <form @submit.prevent="TambahPembayaran()" class="p-2">
-          <div class="mb-3">
-            <label for="anggota" class="form-label">Nama anggota</label>
-            <select
-              name="anggota"
-              id="anggota"
-              class="form-control"
-              v-model="ref_anggota.anggota"
-            >
-              <option value="">Pilih anggota</option>
-              <option
-                v-for="anggota in dt_anggota"
-                :key="anggota.id"
-                :value="anggota.id + '_' + anggota.biaya"
+        <div v-if="loading" class="loading-overlay">
+          <span>Loading...</span>
+        </div>
+        <div class="card">
+          <form @submit.prevent="TambahPembayaran()" class="p-4">
+            <div class="mb-3">
+              <label for="anggota" class="form-label">Nama anggota</label>
+              <select
+                name="anggota"
+                id="anggota"
+                class="form-control"
+                v-model="ref_anggota.anggota"
+                style="border-radius: 20px"
               >
-                {{ anggota.nama }}
-              </option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="ref_tahun" class="form-label">Tahun</label>
-            <select
-              name="tahun"
-              id="tahun"
-              class="form-control"
-              v-model="ref_anggota.tahun"
-            >
-              <option value="">Pilih tahun</option>
-              <option
-                v-for="tahun in dt_tahun"
-                :key="tahun.id"
-                :value="tahun.id"
+                <option value="">Pilih anggota</option>
+                <option
+                  v-for="anggota in dt_anggota"
+                  :key="anggota.id"
+                  :value="anggota.id + '_' + anggota.biaya"
+                >
+                  {{ anggota.nama }}
+                </option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="ref_tahun" class="form-label">Tahun</label>
+              <select
+                name="tahun"
+                id="tahun"
+                class="form-control"
+                v-model="ref_anggota.tahun"
+                style="border-radius: 20px"
               >
-                {{ tahun.tahun }}
-              </option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="bulan" class="form-label">Bulan</label>
-            <select
-              name="bulan"
-              id="bulan"
-              class="form-control"
-              v-model="ref_anggota.bulan"
-            >
-              <option value="">Pilih bulan</option>
-              <option
-                v-for="bulan in dt_bulan"
-                :key="bulan.id"
-                :value="bulan.id"
+                <option value="">Pilih tahun</option>
+                <option
+                  v-for="tahun in dt_tahun"
+                  :key="tahun.id"
+                  :value="tahun.id"
+                >
+                  {{ tahun.tahun }}
+                </option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="bulan" class="form-label">Bulan</label>
+              <select
+                name="bulan"
+                id="bulan"
+                class="form-control"
+                v-model="ref_anggota.bulan"
+                style="border-radius: 20px"
               >
-                {{ bulan.bulan }}
-              </option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="tipe" class="form-label">Tipe Transaksi</label>
-            <select
-              name="tipe"
-              id="tipe_transaksi"
-              class="form-control"
-              v-model="ref_anggota.tipe_transaksi"
+                <option value="">Pilih bulan</option>
+                <option
+                  v-for="bulan in dt_bulan"
+                  :key="bulan.id"
+                  :value="bulan.id"
+                >
+                  {{ bulan.bulan }}
+                </option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="tipe" class="form-label">Tipe Transaksi</label>
+              <select
+                name="tipe"
+                id="tipe_transaksi"
+                class="form-control"
+                v-model="ref_anggota.tipe_transaksi"
+                style="border-radius: 20px"
+              >
+                <option value="">Pilih tipe transaksi</option>
+                <option value="pemasukan">Pemasukan</option>
+                <option value="pengeluaran">Pengeluaran</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="nominal" class="form-label">Nominal Pembayaran</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nominal"
+                placeholder="Masukan nominal pembayaran"
+                v-model="ref_anggota.nominal"
+                style="border-radius: 20px"
+              />
+            </div>
+            <div class="mb-3" id="d-keterangan" style="display: none">
+              <label for="nominal" class="form-label">Keterangan</label>
+              <textarea
+                class="form-control"
+                name="keterangan"
+                id="keterangan"
+                cols="30"
+                rows="3"
+                v-model="ref_anggota.keterangan"
+                placeholder="Masukan keterangan"
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              class="btn btn-primary w-100"
+              style="border-radius: 20px"
             >
-              <option value="">Pilih tipe transaksi</option>
-              <option value="pemasukan">Pemasukan</option>
-              <option value="pengeluaran">Pengeluaran</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="nominal" class="form-label">Nominal Pembayaran</label>
-            <input
-              type="text"
-              class="form-control"
-              id="nominal"
-              placeholder="Masukan nominal pembayaran"
-              v-model="ref_anggota.nominal"
-            />
-          </div>
-          <div class="mb-3" id="d-keterangan" style="display: none">
-            <label for="nominal" class="form-label">Keterangan</label>
-            <textarea
-              class="form-control"
-              name="keterangan"
-              id="keterangan"
-              cols="30"
-              rows="3"
-              v-model="ref_anggota.keterangan"
-              placeholder="Masukan keterangan"
-            ></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary">Simpan</button>
-        </form>
+              Simpan
+            </button>
+          </form>
+        </div>
       </div>
       <!-- footer -->
       <Footer />
@@ -143,6 +159,7 @@ export default {
         nominal: "",
         keterangan: "",
       },
+      loading: false,
     };
   },
   created() {
@@ -165,6 +182,7 @@ export default {
     },
     async TambahPembayaran() {
       try {
+        this.loading = true;
         let anggota_arr = this.ref_anggota.anggota.split("_");
         const response = await axios.post(this.$api + `pembayaran`, {
           anggota_id: anggota_arr[0],
@@ -175,6 +193,7 @@ export default {
           keterangan: this.ref_anggota.keterangan,
         });
         if (response.data.status == 200) {
+          this.loading = false;
           Swal.fire({
             title: "Berhasil",
             text: response.data.message,

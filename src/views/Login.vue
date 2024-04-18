@@ -14,16 +14,23 @@
           <div class="col-md-8 col-lg-6 col-xxl-4">
             <div class="card mb-0">
               <div class="card-body">
-                <a class="text-nowrap logo-img text-center d-block py-3 w-100">
-                  <img
-                    src="../../public/assets/images/logos/ebook.png"
-                    width="70"
-                    alt=""
-                  />
-                </a>
-                <h1 class="text-center fw-semibold">SICAKAS</h1>
-                <p class="text-center">Sistem pencatatan uang kas</p>
-                <!-- <p class="text-center">Selamat Datang, Silahkan Login</p> -->
+                <div class="row justify-content-center">
+                  <div class="col-3 d-flex align-items-end justify-content-end">
+                    <a class="text-nowrap logo-img d-block py-3 w-100">
+                      <img
+                        src="../../public/assets/images/logos/ebook.png"
+                        width="70"
+                        alt=""
+                      />
+                    </a>
+                  </div>
+                  <div class="col-9 d-flex align-items-center">
+                    <h3 class="fw-semibold">Sistem pencatatan uang kas</h3>
+                  </div>
+                </div>
+                <hr class="m-1 p-1" />
+                <!-- <p class="text-center">Sistem pencatatan uang kas</p> -->
+                <p class="text-center">Selamat Datang, Silahkan Login</p>
                 <form @submit.prevent="Login()">
                   <div class="mb-3">
                     <label for="username" class="form-label">Username</label>

@@ -43,6 +43,10 @@
           ><i class="ti ti-plus"></i
         ></router-link>
         <div class="row">
+          <div class="col-12">
+            <h3 class="fw-semibold">Daftar anggota</h3>
+            <hr />
+          </div>
           <div class="col-12" v-for="anggota in dt_anggota" :key="anggota.id">
             <div class="card">
               <div class="card-body">
@@ -59,7 +63,9 @@
                     ><br />
                     <span class="fs-2">{{ anggota.status }}</span>
                   </div>
-                  <div class="col-2">
+                  <div
+                    class="col-2 d-flex justify-content-center align-items-center"
+                  >
                     <div class="dropdown">
                       <a
                         class="btn btn-primary fs-2 btn-sm dropdown-toggle"

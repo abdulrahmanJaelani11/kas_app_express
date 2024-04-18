@@ -46,8 +46,13 @@
                 v-model="status"
               >
                 <option value="">Pilih Status</option>
-                <option value="1">Karyawan</option>
-                <option value="2">Siswa/Mahasiswa</option>
+                <option
+                  v-for="stts in ref_status"
+                  :key="stts.id"
+                  :value="stts.id"
+                >
+                  {{ stts.status }}
+                </option>
               </select>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -76,7 +81,11 @@ export default {
     return {
       nama_anggota: "",
       status: "",
+      ref_status: [],
     };
+  },
+  created() {
+    this.getDataStatus();
   },
   methods: {
     async TambahAnggota() {
@@ -85,7 +94,6 @@ export default {
           anggota: this.nama_anggota,
           status: this.status,
         });
-        console.log(response.data);
         if (response.data.status == 200) {
           Swal.fire({
             icon: "success",
@@ -102,6 +110,12 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    async getDataStatus() {
+      try {
+        const response = await axios.get(this.$api + `get-status`);
+        this.ref_status = response.data;
+      } catch (error) {}
     },
   },
 };

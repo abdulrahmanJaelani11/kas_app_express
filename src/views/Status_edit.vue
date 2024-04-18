@@ -68,6 +68,8 @@
 import Sidebar from "@/components/Sidebar.vue";
 import Header from "@/components/Header.vue";
 import axios from "axios";
+import Swal from "sweetalert2";
+
 export default {
   name: "Status_edit",
   components: {
@@ -94,10 +96,14 @@ export default {
           }
         );
         if (respons.data.status == 200) {
-          alert(respons.data.message);
-          this.$route.to("status");
+          Swal.fire({
+            title: "Berhasil",
+            text: respons.data.message,
+            icon: "success",
+            timer: 3000,
+          });
+          this.$router.push("Status");
         }
-        // this.getDataById();
       } catch (error) {
         console.log(error);
       }

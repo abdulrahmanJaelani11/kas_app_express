@@ -51,12 +51,12 @@
                     />
                   </td>
                   <td>
-                    <span class="fw-semibold fs-2">{{
+                    <span class="fs-2 fw-semibold">{{
                       tran.nama_anggota
                     }}</span>
                     <small class="d-block">{{ tran.created_date }}</small>
                   </td>
-                  <td class="fw-semibold">
+                  <td class="text-end">
                     <i
                       v-if="tran.tipe_transaksi == 'pemasukan'"
                       class="ti ti-arrow-up-left text-success"
@@ -65,7 +65,10 @@
                       v-if="tran.tipe_transaksi == 'pengeluaran'"
                       class="ti ti-arrow-down-right text-danger"
                     ></i
-                    ><span class="fs-2"> {{ tran.nominal }}</span>
+                    ><span class="fw-semibold fs-2"> {{ tran.nominal }}</span>
+                    <small class="d-block p-0"
+                      >{{ tran.bulan }} {{ tran.tahun }}</small
+                    >
                   </td>
                 </tr>
               </tbody>
@@ -108,6 +111,8 @@ export default {
           nama_anggota: data[i].nama_anggota,
           tipe_transaksi: data[i].tipe_transaksi,
           created_date: data[i].created_date,
+          bulan: data[i].bulan,
+          tahun: data[i].tahun,
           nominal: parseInt(data[i].nominal).toLocaleString("id-ID", {
             style: "currency",
             currency: "IDR",

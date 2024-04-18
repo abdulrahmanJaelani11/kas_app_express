@@ -19,39 +19,35 @@
       <!--  Row 1 -->
 
       <div class="container pt-3">
-        <div class="card">
-          <div class="card-body" style="overflow: scroll">
-            <router-link :to="{ name: 'Status_form' }" class="btn btn-primary"
-              >Tambah</router-link
-            >
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Status</th>
-                  <th>Biaya</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="status in dt_status" :key="status.id">
-                  <td>
-                    <router-link
-                      :to="{
-                        name: 'Status_edit',
-                        params: { id: status.id },
-                      }"
-                      class="btn btn-primary btn-sm"
-                    >
-                      <i class="ti ti-edit"></i>
-                    </router-link>
-                  </td>
-                  <td>{{ status.status }}</td>
-                  <td>{{ status.biaya }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <router-link :to="{ name: 'Status_form' }" class="btn btn-primary"
+          >Tambah</router-link
+        >
+        <table class="table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Status</th>
+              <th>Biaya</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="status in dt_status" :key="status.id">
+              <td>
+                <router-link
+                  :to="{
+                    name: 'Status_edit',
+                    params: { id: status.id },
+                  }"
+                  class="btn btn-primary btn-sm"
+                >
+                  <i class="ti ti-edit"></i>
+                </router-link>
+              </td>
+              <td>{{ status.status }}</td>
+              <td>{{ status.biaya }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <!-- footer -->
       <Footer />

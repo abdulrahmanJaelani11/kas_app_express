@@ -17,46 +17,42 @@
       <Header />
       <!--  Header End -->
 
-      <div class="container-fluid">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title fw-semibold mb-4">Edit Anggota</h5>
-            <form @submit.prevent="EditAnggota()">
-              <div class="mb-3">
-                <label for="nama_anggota" class="form-label"
-                  >Nama anggota
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="nama_anggota"
-                  placeholder="Ketikan nama anggota"
-                  aria-describedby="namaAnggota"
-                  v-model="nama_anggota"
-                />
-                <!-- <div id="namaAnggota" class="form-text">
+      <div class="container pt-3">
+        <form @submit.prevent="EditAnggota()" class="p-2">
+          <div class="mb-3">
+            <label for="nama_anggota" class="form-label">Nama anggota </label>
+            <input
+              type="text"
+              class="form-control"
+              id="nama_anggota"
+              placeholder="Ketikan nama anggota"
+              aria-describedby="namaAnggota"
+              v-model="nama_anggota"
+            />
+            <!-- <div id="namaAnggota" class="form-text">
                     We'll never share your email with anyone else.
                   </div> -->
-              </div>
-              <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label"
-                  >Status</label
-                >
-                <select
-                  name="status"
-                  id="status"
-                  class="form-control"
-                  v-model="status"
-                >
-                  <option value="">Pilih Status</option>
-                  <option value="1">Karyawan</option>
-                  <option value="2">Siswa/Mahasiswa</option>
-                </select>
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
           </div>
-        </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Status</label>
+            <select
+              name="status"
+              id="status"
+              class="form-control"
+              v-model="status"
+            >
+              <option value="">Pilih Status</option>
+              <option
+                v-for="stts in ref_status"
+                :key="stts.id"
+                :value="stts.id"
+              >
+                {{ stts.status }}
+              </option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
         <!-- footer -->
         <Footer />
       </div>
@@ -80,10 +76,12 @@ export default {
     return {
       nama_anggota: "",
       status: "",
+      ref_status: [],
     };
   },
   created() {
     this.getAnggota();
+    this.getDataStatus();
   },
   methods: {
     async EditAnggota() {
@@ -125,6 +123,12 @@ export default {
     async getDataStatus() {
       const respon = await axios.get(this.$api + `get-status`);
       this.dt_bulan = respon.data;
+    },
+    async getDataStatus() {
+      try {
+        const response = await axios.get(this.$api + `get-status`);
+        this.ref_status = response.data;
+      } catch (error) {}
     },
   },
 };

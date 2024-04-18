@@ -21,93 +21,40 @@
         class="container pt-3"
         style="position: relative; padding-bottom: 110px"
       >
-        <!-- <h5 style="font-weight: bold">Daftar Anggota</h5> -->
-        <router-link
-          v-if="dt_user.role_id != 3"
-          :to="{ name: 'Anggota_form' }"
-          class="btn btn-primary"
-          style="
-            z-index: 9999;
-            position: fixed;
-            bottom: 5%;
-            right: 50%;
-            transform: translateX(50%);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 5px solid white;
-          "
-          ><i class="ti ti-plus"></i
-        ></router-link>
-        <div class="row">
-          <div class="col-12" v-for="anggota in dt_anggota" :key="anggota.id">
-            <div class="card">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-3">
-                    <img
-                      src="../../public/assets/images/profile/user-1.jpg"
-                      alt="logo"
-                      class="img-fluid rounded-circle"
-                    />
-                  </div>
-                  <div class="col-7">
-                    <span class="fw-semibold">{{ anggota.nama }}</span
-                    ><br />
-                    <span>{{ anggota.status }}</span>
-                  </div>
-                  <div class="col-2">
-                    <div class="dropdown">
-                      <a
-                        class="btn btn-primary btn-sm dropdown-toggle"
-                        href="#"
-                        role="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        Aksi
-                      </a>
-
-                      <ul class="dropdown-menu">
-                        <li v-if="dt_user.role_id != 3">
-                          <router-link
-                            :to="{
-                              name: 'Anggota_edit',
-                              params: { id: anggota.id },
-                            }"
-                            class="dropdown-item"
-                            ><i class="ti ti-edit"></i>Edit</router-link
-                          >
-                        </li>
-                        <li v-if="dt_user.role_id != 3">
-                          <router-link
-                            :to="{ name: 'Anggota_form' }"
-                            class="dropdown-item"
-                            ><i class="ti ti-trash"></i>Hapus</router-link
-                          >
-                        </li>
-                        <li>
-                          <router-link
-                            :to="{
-                              name: 'DetailPembayaran',
-                              params: { id: anggota.id },
-                            }"
-                            class="dropdown-item"
-                            ><i class="ti ti-wallet"></i>Lihat
-                            Pembayaran</router-link
-                          >
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <form @submit.prevent="GantiPassword()">
+          <div class="mb-3">
+            <label class="form-label" or="password_lama"
+              >Password sekarang</label
+            >
+            <input
+              type="password"
+              name="password_lama"
+              id="password_lama"
+              class="form-control"
+              placeholder="Masukan password saat ini"
+              v-model="data.password_lama"
+            />
           </div>
-        </div>
+          <div class="mb-3">
+            <label class="form-label" or="password_baru">Password baru</label>
+            <input
+              type="password"
+              name="password_baru"
+              id="password_baru"
+              class="form-control"
+              placeholder="Masukan password baru"
+              v-model="data.password_baru"
+            />
+          </div>
+          <div class="mb-3">
+            <router-link
+              :to="{ name: 'Setting' }"
+              class="me-2 btn btn-secondary"
+              >Kembali</router-link
+            >
+            <button class="btn btn-primary">Simpan</button>
+          </div>
+        </form>
       </div>
       <!-- footer -->
       <Footer />
@@ -119,6 +66,7 @@
 import Sidebar from "@/components/Sidebar.vue";
 import Header from "@/components/Header.vue";
 import axios from "axios";
+import Swal from "sweetalert2";
 export default {
   name: "Keamanan",
   components: {
@@ -129,17 +77,51 @@ export default {
     return {
       dt_anggota: [],
       dt_user: {},
+      data: {
+        password_lama: "",
+        password_baru: "",
+      },
     };
   },
   created() {
-    this.getData();
+    // this.getData();
   },
   methods: {
     async getData() {
       const respon = await axios.get(this.$api + `get-anggota`);
       this.dt_anggota = respon.data;
     },
-    async TambahAnggota() {},
+    async GantiPassword() {
+      try {
+        const response = await axios.post(
+          this.$api + `ganti-password/${this.$route.params.id}`,
+          this.data
+        );
+        if (response.data.status == 200) {
+          Swal.fire({
+            title: "Berhasil",
+            text: response.data.message,
+            icon: "success",
+            // timer: 3000,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              localStorage.removeItem("user");
+              this.$router.go();
+            }
+          });
+        }
+        if (response.data.status == 400) {
+          Swal.fire({
+            title: "Gagal",
+            text: response.data.message,
+            icon: "error",
+            // timer: 3000,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   mounted() {
     let user = JSON.parse(atob(localStorage.getItem("user")));

@@ -33,6 +33,10 @@ small {
   border: 1px solid black;
 }
 
+.border-grey{
+  border: 1px solid grey;
+}
+
 .rounded-50{
   border-radius: 40%;
 }
@@ -40,3 +44,16 @@ small {
 /* span.fs-1{
   font-size: 17px;
 } */
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}

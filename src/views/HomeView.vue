@@ -17,6 +17,9 @@
       <Header />
       <!--  Header End -->
       <div class="container pb-5">
+        <div v-if="loading" class="loading-overlay">
+          <span>Loading...</span>
+        </div>
         <router-link
           v-if="dt_user.role_id != 3"
           :to="{ name: 'Kas_form' }"
@@ -85,6 +88,7 @@
                         ><small>Transaksi</small></router-link
                       >
                       <router-link
+                        @click="navigate()"
                         class="p-2 d-flex text-center flex-column text-light"
                         :to="{ name: 'DetailTransaksi' }"
                         ><i class="ti ti-chart-bar" style="font-size: 25px"></i
@@ -110,30 +114,26 @@
                 </div>
               </div>
               <div class="col-12">
-                <p class="fw-semibold">Transaksi Hari Ini</p>
+                <p class="fw-semibold m-0">Transaksi Hari Ini</p>
               </div>
-              <div class="col-6">
+              <div class="col-6 my-2">
                 <!-- Yearly Breakup -->
-                <div class="card">
-                  <div class="p-2 text-center">
-                    <span class="fw-semibold fs-2">Pemasukan</span><br />
-                    <i class="ti ti-arrow-up-left text-success"></i>
-                    <span>{{ pemasukan }}</span>
-                  </div>
+                <div class="p-2 text-center border-grey shadow rounded">
+                  <span class="fw-semibold fs-2">Pemasukan</span><br />
+                  <i class="ti ti-arrow-up-left text-success"></i>
+                  <span>{{ pemasukan }}</span>
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-6 my-2">
                 <!-- Yearly Breakup -->
-                <div class="card">
-                  <div class="p-2 text-center">
-                    <span class="fw-semibold fs-2">Pengeluaran</span><br />
-                    <i class="ti ti-arrow-down-right text-danger"></i>
-                    <span>{{ pengeluaran }}</span>
-                  </div>
+                <div class="p-2 border-grey shadow rounded text-center">
+                  <span class="fw-semibold fs-2">Pengeluaran</span><br />
+                  <i class="ti ti-arrow-down-right text-danger"></i>
+                  <span>{{ pengeluaran }}</span>
                 </div>
               </div>
               <div class="col-12">
-                <p class="fw-semibold">Transaksi terakhir</p>
+                <p class="fw-semibold m-0">Transaksi terakhir</p>
                 <table class="table">
                   <tbody>
                     <tr v-for="tran in dt_transaksi_hari_ini" :key="tran.id">
@@ -158,7 +158,7 @@
                         }}</span>
                         <small class="d-block">{{ tran.created_date }}</small>
                       </td>
-                      <td class="fw-semibold">
+                      <td class="text-end">
                         <i
                           v-if="tran.tipe_transaksi == 'pemasukan'"
                           class="ti ti-arrow-up-left text-success"
@@ -167,7 +167,12 @@
                           v-if="tran.tipe_transaksi == 'pengeluaran'"
                           class="ti ti-arrow-down-right text-danger"
                         ></i
-                        ><span class="fs-2"> {{ tran.nominal }}</span>
+                        ><span class="fw-semibold fs-2">
+                          {{ tran.nominal }}</span
+                        >
+                        <small class="d-block p-0">
+                          {{ tran.bulan }} {{ tran.tahun }}</small
+                        >
                       </td>
                     </tr>
                   </tbody>
@@ -203,6 +208,7 @@ export default {
       dt_user: {},
       pemasukan: 0,
       pengeluaran: 0,
+      loading: false,
     };
   },
   created() {
@@ -236,6 +242,8 @@ export default {
             nama_anggota: data[i].nama_anggota,
             tipe_transaksi: data[i].tipe_transaksi,
             created_date: data[i].created_date,
+            bulan: data[i].bulan,
+            tahun: data[i].tahun,
             nominal: parseInt(data[i].nominal).toLocaleString("id-ID", {
               style: "currency",
               currency: "IDR",
@@ -284,6 +292,17 @@ export default {
         alert(error.message);
       }
     },
+    navigate() {
+      this.loading = true; // Set state loading menjadi true
+    },
   },
+  // beforeRouteLeave(to, from, next) {
+  //   // Tunggu beberapa waktu (contoh: 2 detik) untuk menampilkan efek loading
+  //   setTimeout(() => {
+  //     // Set state loading kembali ke false setelah waktu tertentu
+  //     this.loading = false;
+  //     next(); // Lanjutkan navigasi
+  //   }, 500); // Ubah angka 2000 sesuai dengan kebutuhan waktu loading
+  // },
 };
 </script>

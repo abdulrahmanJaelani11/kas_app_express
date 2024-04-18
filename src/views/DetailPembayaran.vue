@@ -18,6 +18,9 @@
       <!--  Header End -->
 
       <div class="container pt-3 pb-5">
+        <div v-if="loading" class="loading-overlay">
+          <span>Loading...</span>
+        </div>
         <div class="row">
           <div class="col-12">
             <div
@@ -26,7 +29,7 @@
                 overflow: scroll;
                 width: 100%;
                 display: flex;
-                justify-content: space-between;
+                justify-content: space-around;
                 flex-direction: row;
               "
             >
@@ -132,6 +135,7 @@ export default {
     return {
       dt_detPembayaran: [],
       dt_tahun: [],
+      loading: false,
     };
   },
   created() {
@@ -140,9 +144,13 @@ export default {
   },
   methods: {
     async getData(tahun = null) {
+      this.loading = true;
       const respon = await axios.get(
         this.$api + `get-pembayaran-det/${this.$route.params.id}/${tahun}`
       );
+      if (respon.data) {
+        this.loading = false;
+      }
       this.dt_detPembayaran = respon.data;
       console.log(respon);
     },
