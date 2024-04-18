@@ -21,7 +21,7 @@
           <span>Loading...</span>
         </div>
         <router-link
-          v-if="dt_user.role_id != 3"
+          v-if="dt_user.result[0].role_id != 3"
           :to="{ name: 'Kas_form' }"
           class="btn btn-primary"
           style="

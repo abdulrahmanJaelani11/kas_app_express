@@ -169,7 +169,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.auth) {
-    let dt_user = JSON.parse(atob(localStorage.getItem("user")));
+    // let dt_user = JSON.parse(atob(localStorage.getItem("user")));
     if (localStorage.getItem("user") == null) {
       next({ name: "Login" });
     } else {
@@ -179,7 +179,9 @@ router.beforeEach((to, from, next) => {
         to.name == "Anggota_form" ||
         to.name == "Anggota_edit"
       ) {
-        if (dt_user.result[0].role_id == 3) {
+        if (
+          JSON.parse(atob(localStorage.getItem("user"))).result[0].role_id == 3
+        ) {
           next({ name: "home" });
         }
       }
