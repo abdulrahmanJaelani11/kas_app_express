@@ -26,7 +26,7 @@
                 <h5 class="card-title">Riwayat transaksi</h5>
               </div>
               <div class="col-6 d-flex justify-content-end">
-                <button @click="downloadPDF" class="btn btn-primary btn-sm">
+                <button @click="downloadPDF()" class="btn btn-primary btn-sm">
                   Unduh PDF
                 </button>
               </div>

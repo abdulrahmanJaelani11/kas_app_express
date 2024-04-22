@@ -22,6 +22,8 @@ import Profile from "../views/Profile.vue";
 import DetailPembayaran from "../views/DetailPembayaran.vue";
 import Keamanan from "../views/Keamanan.vue";
 import DetailTransaksi from "../views/DetailTransaksi.vue";
+import ListTransaksi from "../views/ListTransaksi.vue";
+import BayarKasSekaligus from "../views/BayarKasSekaligus.vue";
 
 const routes = [
   {
@@ -156,6 +158,22 @@ const routes = [
     path: "/detail-transaksi",
     name: "DetailTransaksi",
     component: DetailTransaksi,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: "/opsi-transaksi",
+    name: "ListTransaksi",
+    component: ListTransaksi,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: "/bayar-kas-sekaligus",
+    name: "BayarKasSekaligus",
+    component: BayarKasSekaligus,
     meta: {
       auth: true,
     },

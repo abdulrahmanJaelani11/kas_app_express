@@ -22,7 +22,7 @@
         </div>
         <router-link
           v-if="dt_user.result[0].role_id != 3"
-          :to="{ name: 'Kas_form' }"
+          :to="{ name: 'ListTransaksi' }"
           class="btn btn-primary"
           style="
             z-index: 9999;
@@ -83,7 +83,7 @@
                           dt_user.result[0].role_id == 2
                         "
                         class="p-2 d-flex text-center flex-column text-light"
-                        :to="{ name: 'Kas_form' }"
+                        :to="{ name: 'ListTransaksi' }"
                         ><i class="ti ti-wallet" style="font-size: 25px"></i
                         ><small>Transaksi</small></router-link
                       >
@@ -118,7 +118,7 @@
               </div>
               <div class="col-6 my-2">
                 <!-- Yearly Breakup -->
-                <div class="p-2 text-center border-grey shadow rounded">
+                <div class="p-2 text-center shadow rounded">
                   <span class="fw-semibold fs-2">Pemasukan</span><br />
                   <i class="ti ti-arrow-up-left text-success"></i>
                   <span>{{ pemasukan }}</span>
@@ -126,7 +126,7 @@
               </div>
               <div class="col-6 my-2">
                 <!-- Yearly Breakup -->
-                <div class="p-2 border-grey shadow rounded text-center">
+                <div class="p-2 shadow rounded text-center">
                   <span class="fw-semibold fs-2">Pengeluaran</span><br />
                   <i class="ti ti-arrow-down-right text-danger"></i>
                   <span>{{ pengeluaran }}</span>
