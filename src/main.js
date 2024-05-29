@@ -6,8 +6,8 @@ import "@fortawesome/fontawesome-free/css/all.css";
 
 const app = createApp(App);
 // app.mixin(MyJs);
-app.config.globalProperties.$api = "https://api-kas-express.vercel.app/";
+// app.config.globalProperties.$api = "https://api-kas-express.vercel.app/";
 // app.config.globalProperties.$api = "http://192.168.230.86:3001/";
-// app.config.globalProperties.$api = "http://localhost:3001/";
+app.config.globalProperties.$api = "http://localhost:3000/api";
 
 app.use(router).mount("#app");
