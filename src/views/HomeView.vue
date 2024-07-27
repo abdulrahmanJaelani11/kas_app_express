@@ -1,13 +1,5 @@
 <template>
-  <div
-    class="page-wrapper"
-    id="main-wrapper"
-    data-layout="vertical"
-    data-navbarbg="skin6"
-    data-sidebartype="full"
-    data-sidebar-position="fixed"
-    data-header-position="fixed"
-  >
+  <div>
     <!-- Sidebar Start -->
     <!-- <Sidebar /> -->
     <!--  Sidebar End -->
@@ -42,141 +34,147 @@
         ></router-link>
         <!--  Row 1 -->
         <div class="row pt-3">
-          <div class="col-md-12">
-            <h4 style="font-weight: bold">
-              Hai, {{ dt_user.result[0].full_name }}
-            </h4>
-            <p>Selamat datang kembali</p>
-          </div>
-          <div class="col-lg-4">
-            <div class="row">
-              <div class="col-lg-12">
-                <!-- Yearly Breakup -->
-                <div class="card main-card text-light shadow-lg">
-                  <div class="card-body p-4">
-                    <div class="row">
-                      <div class="col-8">
-                        <small>Saldo saat ini</small>
-                        <h5
-                          class="card-title text-light mb-9 fw-semibold"
-                          style="font-size: 20px"
+          <div class="col-lg-12 col-sm-4">
+            <div class="row content">
+              <div class="col-lg-4 col-sm-12">
+                <div class="col-12">
+                  <h4 style="font-weight: bold">
+                    Hai, {{ dt_user.result[0].full_name }}
+                  </h4>
+                  <p>Selamat datang kembali</p>
+                  <div class="card main-card text-light shadow-lg">
+                    <div class="card-body p-4">
+                      <div class="row">
+                        <div class="col-8">
+                          <small>Saldo saat ini</small>
+                          <h5
+                            class="card-title text-light mb-9 fw-semibold"
+                            style="font-size: 20px"
+                          >
+                            {{ saldo }}
+                          </h5>
+                        </div>
+                        <div
+                          class="col-4 d-flex justify-content-center align-items-center"
                         >
-                          {{ saldo }}
-                        </h5>
+                          <i
+                            class="ti ti-credit-card"
+                            style="font-size: 50px"
+                          ></i>
+                        </div>
                       </div>
+                      <hr style="margin: 2px 0 5px 0" />
                       <div
-                        class="col-4 d-flex justify-content-center align-items-center"
+                        class="d-flex justify-content-start align-items-center"
                       >
-                        <i
-                          class="ti ti-credit-card"
-                          style="font-size: 50px"
-                        ></i>
+                        <router-link
+                          v-if="
+                            dt_user.result[0].role_id == 1 ||
+                            dt_user.result[0].role_id == 2
+                          "
+                          class="p-2 d-flex text-center flex-column text-light"
+                          :to="{ name: 'ListTransaksi' }"
+                          ><i class="ti ti-wallet" style="font-size: 25px"></i
+                          ><small>Transaksi</small></router-link
+                        >
+                        <router-link
+                          @click="navigate()"
+                          class="p-2 d-flex text-center flex-column text-light"
+                          :to="{ name: 'DetailTransaksi' }"
+                          ><i
+                            class="ti ti-chart-bar"
+                            style="font-size: 25px"
+                          ></i
+                          ><small>Detail</small></router-link
+                        >
+                        <!-- <router-link
+                          class="p-2 d-flex text-center flex-column text-light"
+                          :to="{ name: 'Anggota' }"
+                          ><i class="ti ti-users" style="font-size: 25px"></i
+                          ><small>Anggota</small></router-link
+                        >
+                        <router-link
+                          class="p-2 d-flex text-center flex-column text-light"
+                          :to="{ name: 'Anggota' }"
+                          ><i class="ti ti-settings" style="font-size: 25px"></i
+                          ><small>Anggota</small></router-link
+                        > -->
+                        <!-- <router-link :to="{}"
+          ><i class="ti ti-home" style="font-size: 25px"></i
+        ></router-link> -->
                       </div>
                     </div>
-                    <hr style="margin: 2px 0 5px 0" />
-                    <div
-                      class="d-flex justify-content-start align-items-center"
-                    >
-                      <router-link
-                        v-if="
-                          dt_user.result[0].role_id == 1 ||
-                          dt_user.result[0].role_id == 2
-                        "
-                        class="p-2 d-flex text-center flex-column text-light"
-                        :to="{ name: 'ListTransaksi' }"
-                        ><i class="ti ti-wallet" style="font-size: 25px"></i
-                        ><small>Transaksi</small></router-link
-                      >
-                      <router-link
-                        @click="navigate()"
-                        class="p-2 d-flex text-center flex-column text-light"
-                        :to="{ name: 'DetailTransaksi' }"
-                        ><i class="ti ti-chart-bar" style="font-size: 25px"></i
-                        ><small>Detail</small></router-link
-                      >
-                      <!-- <router-link
-                        class="p-2 d-flex text-center flex-column text-light"
-                        :to="{ name: 'Anggota' }"
-                        ><i class="ti ti-users" style="font-size: 25px"></i
-                        ><small>Anggota</small></router-link
-                      >
-                      <router-link
-                        class="p-2 d-flex text-center flex-column text-light"
-                        :to="{ name: 'Anggota' }"
-                        ><i class="ti ti-settings" style="font-size: 25px"></i
-                        ><small>Anggota</small></router-link
-                      > -->
-                      <!-- <router-link :to="{}"
-        ><i class="ti ti-home" style="font-size: 25px"></i
-      ></router-link> -->
+                  </div>
+                </div>
+                <div class="col-12">
+                  <p class="fw-semibold m-0">Transaksi Hari Ini</p>
+                  <div class="row">
+                    <div class="col-6 my-2">
+                      <!-- Yearly Breakup -->
+                      <div class="p-2 text-center shadow rounded">
+                        <span class="fw-semibold fs-2">Pemasukan</span><br />
+                        <i class="ti ti-arrow-up-left text-success"></i>
+                        <span>{{ pemasukan }}</span>
+                      </div>
+                    </div>
+                    <div class="col-6 my-2">
+                      <!-- Yearly Breakup -->
+                      <div class="p-2 shadow rounded text-center">
+                        <span class="fw-semibold fs-2">Pengeluaran</span><br />
+                        <i class="ti ti-arrow-down-right text-danger"></i>
+                        <span>{{ pengeluaran }}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-12">
-                <p class="fw-semibold m-0">Transaksi Hari Ini</p>
-              </div>
-              <div class="col-6 my-2">
-                <!-- Yearly Breakup -->
-                <div class="p-2 text-center shadow rounded">
-                  <span class="fw-semibold fs-2">Pemasukan</span><br />
-                  <i class="ti ti-arrow-up-left text-success"></i>
-                  <span>{{ pemasukan }}</span>
-                </div>
-              </div>
-              <div class="col-6 my-2">
-                <!-- Yearly Breakup -->
-                <div class="p-2 shadow rounded text-center">
-                  <span class="fw-semibold fs-2">Pengeluaran</span><br />
-                  <i class="ti ti-arrow-down-right text-danger"></i>
-                  <span>{{ pengeluaran }}</span>
-                </div>
-              </div>
-              <div class="col-12">
-                <p class="fw-semibold m-0">Transaksi terakhir</p>
-                <table class="table">
-                  <tbody>
-                    <tr v-for="tran in dt_transaksi_hari_ini" :key="tran.id">
-                      <td
-                        style="padding-right: 0; padding-left: 0"
-                        class="d-flex align-items-center"
-                      >
-                        <img
-                          src="../../public/assets/images/profile/user-1.jpg"
-                          alt="logo"
-                          style="
-                            width: 40px;
-                            margin: 0;
-                            padding: 0;
-                            border-radius: 50%;
-                          "
-                        />
-                      </td>
-                      <td>
-                        <span class="fw-semibold fs-2">{{
-                          tran.nama_anggota
-                        }}</span>
-                        <small class="d-block">{{ tran.created_date }}</small>
-                      </td>
-                      <td class="text-end">
-                        <i
-                          v-if="tran.tipe_transaksi == 'pemasukan'"
-                          class="ti ti-arrow-up-left text-success"
-                        ></i>
-                        <i
-                          v-if="tran.tipe_transaksi == 'pengeluaran'"
-                          class="ti ti-arrow-down-right text-danger"
-                        ></i
-                        ><span class="fw-semibold fs-2">
-                          {{ tran.nominal }}</span
+              <div class="col-sm-12 col-lg-8">
+                <div id="riwayat">
+                  <p class="fw-semibold m-0">Transaksi terakhir</p>
+                  <table class="table">
+                    <tbody>
+                      <tr v-for="tran in dt_transaksi_hari_ini" :key="tran.id">
+                        <td
+                          style="padding-right: 0; padding-left: 0"
+                          class="d-flex align-items-center"
                         >
-                        <small class="d-block p-0">
-                          {{ tran.bulan }} {{ tran.tahun }}</small
-                        >
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                          <img
+                            src="../../public/assets/images/profile/user-1.jpg"
+                            alt="logo"
+                            style="
+                              width: 40px;
+                              margin: 0;
+                              padding: 0;
+                              border-radius: 50%;
+                            "
+                          />
+                        </td>
+                        <td>
+                          <span class="fw-semibold fs-2">{{
+                            tran.nama_anggota
+                          }}</span>
+                          <small class="d-block">{{ tran.created_date }}</small>
+                        </td>
+                        <td class="text-end">
+                          <i
+                            v-if="tran.tipe_transaksi == 'pemasukan'"
+                            class="ti ti-arrow-up-left text-success"
+                          ></i>
+                          <i
+                            v-if="tran.tipe_transaksi == 'pengeluaran'"
+                            class="ti ti-arrow-down-right text-danger"
+                          ></i
+                          ><span class="fw-semibold fs-2">
+                            {{ tran.nominal }}</span
+                          >
+                          <small class="d-block p-0">
+                            {{ tran.bulan }} {{ tran.tahun }}</small
+                          >
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

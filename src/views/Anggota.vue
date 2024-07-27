@@ -17,10 +17,7 @@
       <Header />
       <!--  Header End -->
 
-      <div
-        class="container pt-3"
-        style="position: relative; padding-bottom: 110px"
-      >
+      <div class="container" style="position: relative; padding-bottom: 110px">
         <!-- <h5 style="font-weight: bold">Daftar Anggota</h5> -->
         <router-link
           v-if="dt_user.role_id != 3"
@@ -43,9 +40,27 @@
           ><i class="ti ti-plus"></i
         ></router-link>
         <div class="row">
-          <div class="col-12">
+          <div
+            class="col-12 mb-2"
+            style="
+              z-index: 10;
+              position: sticky;
+              top: 0;
+              background-color: white;
+              padding: 7px;
+            "
+          >
             <h3 class="fw-semibold">Daftar anggota</h3>
-            <hr />
+            <hr class="mt-0 mb-2" />
+            <input
+              type="text"
+              name="cari_anggota"
+              id="cari_anggota"
+              class="form-control"
+              placeholder="Masukan pencarian"
+              v-model="keyword"
+              @change="CariAnggota()"
+            />
           </div>
           <div class="col-12" v-for="anggota in dt_anggota" :key="anggota.id">
             <div class="card">
@@ -135,6 +150,7 @@ export default {
     return {
       dt_anggota: [],
       dt_user: {},
+      keyword: "",
     };
   },
   created() {
@@ -145,7 +161,16 @@ export default {
       const respon = await axios.get(this.$api + `get-anggota`);
       this.dt_anggota = respon.data;
     },
-    async TambahAnggota() {},
+    async CariAnggota() {
+      if (this.keyword.length > 0) {
+        const response = await axios.get(
+          this.$api + `cari-anggota/${this.keyword}`
+        );
+        this.dt_anggota = response.data;
+      } else {
+        this.getData();
+      }
+    },
   },
   mounted() {
     let user = JSON.parse(atob(localStorage.getItem("user")));

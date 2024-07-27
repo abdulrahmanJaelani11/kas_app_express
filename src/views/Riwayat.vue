@@ -17,21 +17,39 @@
       <Header />
       <!--  Header End -->
 
-      <div class="container pt-3">
+      <div class="container">
         <!-- <h5 style="font-weight: bold">Daftar Anggota</h5> -->
         <div class="row">
-          <div class="col-12" style="margin-bottom: 60px">
-            <div class="row">
+          <div class="col-12">
+            <div
+              class="row"
+              style="
+                position: sticky;
+                top: 0;
+                background-color: white;
+                padding: 10px 0;
+              "
+            >
               <div class="col-6">
                 <h5 class="card-title">Riwayat transaksi</h5>
               </div>
               <div class="col-6 d-flex justify-content-end">
+                <!-- <button class="btn btn-sm btn-primary me-2 btn_filter">
+                  Filter
+                </button> -->
+                <button
+                  class="btn btn-sm m-t-4 btn-info me-2"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modal-filter"
+                >
+                  Filter
+                </button>
                 <button @click="downloadPDF()" class="btn btn-primary btn-sm">
                   Unduh PDF
                 </button>
               </div>
             </div>
-            <hr />
             <table class="table">
               <tbody>
                 <tr v-for="tran in dt_riwayat" :key="tran.id">
@@ -71,12 +89,100 @@
                     >
                   </td>
                 </tr>
+                <tr v-if="dt_riwayat.length == 0">
+                  <td colspan="3" class="fw-semibold text-center">
+                    Tidak ada transaksi
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
       <!-- footer -->
+      <div
+        id="modal-filter"
+        class="modal fade"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title judul_list_file">Filter Transaksi</h5>
+              <button
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group row">
+                <div class="col-6">
+                  <label for="tgl_awal" class="form-label">Tanggal awal</label>
+                  <input
+                    type="date"
+                    name="tgl_awal"
+                    id="tgl_awal"
+                    class="form-control"
+                    v-model="filter.tgl_awal"
+                  />
+                </div>
+                <div class="col-6">
+                  <label for="tgl_akhir" class="form-label"
+                    >Tanggal akhir</label
+                  >
+                  <input
+                    type="date"
+                    name="tgl_akhir"
+                    id="tgl_akhir"
+                    class="form-control"
+                    v-model="filter.tgl_akhir"
+                  />
+                </div>
+              </div>
+              <div class="form-group mt-2">
+                <label for="filter_anggota" class="form-label"
+                  >Nama Anggota</label
+                >
+                <select
+                  name="filter_anggota"
+                  id="filter_anggota"
+                  class="form-control"
+                  v-model="filter.anggota"
+                >
+                  <option value="0">Pilih Anggota</option>
+                  <option
+                    v-for="anggota in dt_anggota"
+                    :key="anggota.id"
+                    :value="anggota.id"
+                  >
+                    {{ anggota.nama }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                class="btn btn-secondary"
+                type="button"
+                data-bs-dismiss="modal"
+              >
+                Tutup
+              </button>
+              <button
+                class="btn btn-primary"
+                type="button"
+                data-bs-dismiss="modal"
+                @click="getDataFilter()"
+              >
+                Filter
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <Footer />
     </div>
   </div>
@@ -86,6 +192,8 @@
 import Sidebar from "@/components/Sidebar.vue";
 import Header from "@/components/Header.vue";
 import axios from "axios";
+import $ from "jquery";
+
 export default {
   name: "Riwayat",
   components: {
@@ -95,10 +203,17 @@ export default {
   data() {
     return {
       dt_riwayat: [],
+      dt_anggota: [],
+      filter: {
+        tgl_awal: null,
+        tgl_akhir: null,
+        anggota: 0,
+      },
     };
   },
   created() {
     this.getData();
+    this.getAnggota();
   },
   methods: {
     async getData() {
@@ -143,6 +258,17 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    async getAnggota() {
+      const respon = await axios.get(this.$api + `get-anggota`);
+      this.dt_anggota = respon.data;
+    },
+    async getDataFilter() {
+      const response = await axios.post(
+        this.$api + `get-riwayat-filter`,
+        this.filter
+      );
+      this.dt_riwayat = response.data;
     },
   },
 };

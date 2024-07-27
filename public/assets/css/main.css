@@ -1,10 +1,12 @@
 small {
     font-size: 11px;
-  }
-  
-  .main-card{
-        background-image: linear-gradient(to right, #5D87FF, #94caff);      
-  }
+}
+.content{
+  margin-top: 10vh;
+}
+.main-card{
+      background-image: linear-gradient(to right, #5D87FF, #94caff);      
+}
   
 .card{
     margin-bottom: 10px;
@@ -56,4 +58,22 @@ small {
   justify-content: center;
   align-items: center;
   z-index: 999;
+}
+
+#riwayat{
+  padding: 10px;
+  /* box-sizing: border-box; */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media only screen and (max-width: 400px) {
+  .content{
+    margin-top: 0;
+  }   
+
+  #riwayat{
+    padding: 0;
+    box-sizing: unset;
+    box-shadow: none;
+  } 
 }
